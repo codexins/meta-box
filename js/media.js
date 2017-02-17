@@ -193,7 +193,19 @@ jQuery( function ( $ ) {
 
 		//Add item view
 		addItemView: function ( item ) {
-			this.$el.append( this.getItemView( item ).el );
+			var index = this.controller.get( 'items' ).indexOf( item ),
+				target = this.$el.children().eq(index),
+				itemEl = this.getItemView( item ).el;
+
+			if( 0 >= index ) {
+				this.$el.prepend( itemEl );
+			}
+			else if( this.$el.children().length <= index ) {
+				this.$el.append( itemEl )
+			}
+			else {
+				this.$el.children().eq( index - 1 ).after( itemEl );
+			}
 		},
 
 		//Remove item view
